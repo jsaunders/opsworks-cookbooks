@@ -1,6 +1,6 @@
 script "deploy_app" do
   interpreter "bash"
-  user "root"
+  user "ubuntu"
   cwd "/tmp"
   code <<-EOH
 
@@ -59,7 +59,17 @@ WSGIScriptAlias / /home/ubuntu/$REPO_NAME/source/$PROJECT_NAME/wsgi.py
 WSGIPythonPath /home/ubuntu/$PROJECT_NAME/source
 EOF
 
-    sudo git clone #{node['deploy']['scm']['repository']} /home/ubuntu/#{node['django_app']['repo_name']}
+    #install private SSH deploy key
+    sudo cat >> /home/ubuntu/.ssh/id_rsa << EOF
+#{node['deploy']['bespoke_app']['scm']['ssh_key']}
+EOF
+    sudo chmod 600 /home/ubuntu/.ssh/id_rsa
+    sudo git clone #{node['deploy']['bespoke_app']['scm']['repository']} /home/ubuntu/#{node['django_app']['repo_name']}
+
+    #todo: add env keys to environemnt
+
+    #instal dependencies
+    #todo: usepip and requirements.txt
     sudo pip install django
 
     sudo chown -R ubuntu /home/ubuntu/$REPO_NAME
