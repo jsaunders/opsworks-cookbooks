@@ -39,6 +39,7 @@ script "install_dependencies" do
 
     #disable default apache site
     #sudo a2dissite 000-default
+    sudo service apache2 start
 
   EOH
 
