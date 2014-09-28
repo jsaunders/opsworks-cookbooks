@@ -1,4 +1,4 @@
-clone_repo = node['deploy']['bespoke_app']['scm']['repository']["https://github.com/"]=""
+clone_repo = node['deploy'][0]['scm']['repository']["https://github.com/"]=""
 
 script "deploy_app" do
   interpreter "bash"
@@ -44,10 +44,10 @@ EOF
 
     #install private SSH deploy key
     sudo cat >> /home/ubuntu/.ssh/id_rsa << EOF
-#{node['deploy']['bespoke_app']['scm']['ssh_key']}
+#{node['deploy'][0]['scm']['ssh_key']}
 EOF
-    sudo chmod 600 /home/ubuntu/.ssh/id_rsa
-    sudo git clone git@github.com: #{clone_repo} /home/ubuntu/#{node['django_app']['repo_name']}
+    chmod 600 /home/ubuntu/.ssh/id_rsa
+    git clone git@github.com: #{clone_repo} /home/ubuntu/#{node['django_app']['repo_name']} >> /home/ubuntu/log
 
     #todo: add env keys to environemnt
 
