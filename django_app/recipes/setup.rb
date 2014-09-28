@@ -26,8 +26,6 @@ script "install_dependencies" do
     REPO_NAME=#{node['django_app']['repo_name']}
     PROJECT_NAME=#{node['django_app']['project_name']}
 
-    #todo: use DOCUMENT_ROOT=#{node[:deploy]['appshortname'][:document_root]}
-
     ##### sudo apt-get -y update
     # suppress GRUB warning for unattended upgrade
     ##### export DEBIAN_FRONTEND=noninteractive
