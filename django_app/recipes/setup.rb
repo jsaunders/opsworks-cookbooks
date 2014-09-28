@@ -28,10 +28,10 @@ script "install_dependencies" do
 
     #todo: use DOCUMENT_ROOT=#{node[:deploy]['appshortname'][:document_root]}
 
-    sudo apt-get -y update
+    ##### sudo apt-get -y update
     # suppress GRUB warning for unattended upgrade
-    export DEBIAN_FRONTEND=noninteractive
-    sudo apt-get -y upgrade
+    ##### export DEBIAN_FRONTEND=noninteractive
+    ##### sudo apt-get -y upgrade
 
     sudo apt-get install -y git
     sudo apt-get install -y apache2
