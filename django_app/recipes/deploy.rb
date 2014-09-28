@@ -1,4 +1,4 @@
-script "install_dependencies" do
+script "deploy_app" do
   interpreter "bash"
   user "root"
   cwd "/tmp"
@@ -59,7 +59,6 @@ WSGIScriptAlias / /home/ubuntu/$REPO_NAME/source/$PROJECT_NAME/wsgi.py
 WSGIPythonPath /home/ubuntu/$PROJECT_NAME/source
 EOF
 
-    ### temp deploy code ###
     sudo git clone #{node['deploy']['scm']['repository']} /home/ubuntu/#{node['django_app']['repo_name']}
     sudo pip install django
 
