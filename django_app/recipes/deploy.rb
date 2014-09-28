@@ -1,27 +1,8 @@
 script "deploy_app" do
   interpreter "bash"
   user "ubuntu"
-  cwd "/tmp"
+  cwd "/home/ubuntu/"
   code <<-EOH
-
-    # Minimum expected project repo structure:
-    #   - your_repo (repo_name)
-    #     - source
-    #       - requirements (pip requirements format. One file per environment)
-    #         - production.txt
-    #         - staging.txt
-    #         - etc...
-    #       - static
-    #       - your_project (project_name)
-    #         - wsgi.py
-    #
-    # OpsWorks custom JSON example:
-    # {
-    #   "django_app" : {
-    #       "repo_name" : "foo.example.com"
-    #       "project_name" : "foo"
-    #   }
-    # }
 
     REPO_NAME=#{node['django_app']['repo_name']}
     PROJECT_NAME=#{node['django_app']['project_name']}
