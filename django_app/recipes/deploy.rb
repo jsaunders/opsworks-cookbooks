@@ -1,3 +1,5 @@
+clone_repo = node['deploy']['bespoke_app']['scm']['repository']["https://github.com/"]=""
+
 script "deploy_app" do
   interpreter "bash"
   user "ubuntu"
@@ -45,7 +47,7 @@ EOF
 #{node['deploy']['bespoke_app']['scm']['ssh_key']}
 EOF
     sudo chmod 600 /home/ubuntu/.ssh/id_rsa
-    sudo git clone #{node['deploy']['bespoke_app']['scm']['repository']} /home/ubuntu/#{node['django_app']['repo_name']}
+    sudo git clone git@github.com: #{clone_repo} /home/ubuntu/#{node['django_app']['repo_name']}
 
     #todo: add env keys to environemnt
 
