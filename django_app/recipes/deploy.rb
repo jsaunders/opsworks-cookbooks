@@ -60,7 +60,7 @@ WSGIPythonPath /home/ubuntu/$PROJECT_NAME/source
 EOF
 
     ### temp deploy code ###
-    sudo git clone git://github.com/abrinsmead/django_test_project.git ~/django_test_project
+    sudo git clone #{node['deploy']['scm']['repository']} /home/ubuntu/#{node['django_app']['repo_name']}
     sudo pip install django
 
     sudo chown -R ubuntu /home/ubuntu/$REPO_NAME
