@@ -4,9 +4,13 @@ script "install_dependencies" do
   cwd "/tmp"
   code <<-EOH
 
-    # Expected project structure:
+    # Minimum expected project repo structure:
     #   - your_repo (repo_name)
     #     - source
+    #       - requirements (pip requirements format. One file per environment)
+    #         - production.txt
+    #         - staging.txt
+    #         - etc...
     #       - static
     #       - your_project (project_name)
     #         - wsgi.py
@@ -21,6 +25,8 @@ script "install_dependencies" do
 
     REPO_NAME=#{node['django_app']['repo_name']}
     PROJECT_NAME=#{node['django_app']['project_name']}
+
+    #todo: use DOCUMENT_ROOT=#{node[:deploy]['appshortname'][:document_root]}
 
     sudo apt-get -y update
     # suppress GRUB warning for unattended upgrade
