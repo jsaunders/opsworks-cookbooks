@@ -1,24 +1,79 @@
-script "deploy_app" do
+script "install_dependencies" do
   interpreter "bash"
   user "root"
   cwd "/tmp"
   code <<-EOH
 
-    PROJECT_NAME=#{node['django_app']['app_name']}
+    # Minimum expected project repo structure:
+    #   - your_repo (repo_name)
+    #     - source
+    #       - requirements (pip requirements format. One file per environment)
+    #         - production.txt
+    #         - staging.txt
+    #         - etc...
+    #       - static
+    #       - your_project (project_name)
+    #         - wsgi.py
+    #
+    # OpsWorks custom JSON example:
+    # {
+    #   "django_app" : {
+    #       "repo_name" : "foo.example.com"
+    #       "project_name" : "foo"
+    #   }
+    # }
 
-    chown -R ubuntu /home/ubuntu/$PROJECT_NAME
+    REPO_NAME=#{node['django_app']['repo_name']}
+    PROJECT_NAME=#{node['django_app']['project_name']}
 
-    chmod o+r /home/ubuntu/$PROJECT_NAME/$PROJECT_NAME/$PROJECT_NAME/wsgi.py
-    chmod o+x /home/ubuntu/$PROJECT_NAME/$PROJECT_NAME
-    chmod o+x /home/ubuntu/$PROJECT_NAME
-    chmod o+x /home/ubuntu
-    chmod o+x /home
+    #disable default apache site
+    sudo a2dissite 000-default
 
-    #todo: install pip dependencies
-    #todo: syncdb/migrate
+    sudo cat >> /etc/apache2/sites-available/site.conf << EOF
+<VirtualHost *:80>
 
-    #restart apache
-    sudo service apache2 restart
+    ErrorLog /var/log/apache2/error.log
+    CustomLog /var/log/apache2/access.log combined
+
+    Alias /static/ /home/ubuntu/$REPO_NAME/source/static/
+    Alias /robots.txt /home/ubuntu/$REPO_NAME/source/static/robots.txt
+    Alias /favicon.ico /home/ubuntu/$REPO_NAME/source/static/favicon.ico
+
+    <Directory /home/ubuntu/$REPO_NAME/source/static/>
+        Order deny,allow
+        Require all granted
+    </Directory>
+
+    <Directory /home/ubuntu/$REPO_NAME/source/$PROJECT_NAME>
+        <Files wsgi.py>
+            Order deny,allow
+            Require all granted
+        </Files>
+    </Directory>
+
+    SetEnv DJANGO_SETTINGS_MODULE $PROJECT_NAME.settings.base
+
+</VirtualHost>
+
+WSGIScriptAlias / /home/ubuntu/$REPO_NAME/source/$PROJECT_NAME/wsgi.py
+WSGIPythonPath /home/ubuntu/$PROJECT_NAME/source
+EOF
+
+    ### temp deploy code ###
+    sudo git clone git://github.com/abrinsmead/django_test_project.git ~/django_test_project
+    sudo pip install django
+
+    sudo chown -R ubuntu /home/ubuntu/$REPO_NAME
+    sudo chmod o+r /home/ubuntu/$REPO_NAME/source/$PROJECT_NAME/wsgi.py
+    sudo chmod o+x /home/ubuntu/$REPO_NAME/source
+    sudo chmod o+x /home/ubuntu/$REPO_NAME
+    sudo chmod o+x /home/ubuntu
+    sudo chmod o+x /home
+
+    sudo a2ensite site
+    sudo service apache2 reload
+    sudo service apache2 start
 
   EOH
+
 end
