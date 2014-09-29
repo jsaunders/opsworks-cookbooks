@@ -3,16 +3,16 @@
     ErrorLog /var/log/apache2/error.log
     CustomLog /var/log/apache2/access.log combined
 
-    Alias /static/ /home/ubuntu/<%= @project_path %>/static/
-    Alias /robots.txt /home/ubuntu/<%= @project_path %>/static/robots.txt
-    Alias /favicon.ico /home/ubuntu/<%= @project_path %>/static/favicon.ico
+    Alias /static/ <%= @project_path %>/static/
+    Alias /robots.txt <%= @project_path %>/static/robots.txt
+    Alias /favicon.ico <%= @project_path %>/static/favicon.ico
 
-    <Directory /home/ubuntu/<%= @project_path %>/static/>
+    <Directory <%= @project_path %>/static/>
         Order deny,allow
         Require all granted
     </Directory>
 
-    <Directory /home/ubuntu/<%= @project_path %>/<%= @project_name %>>
+    <Directory <%= @project_path %>/<%= @project_name %>>
         <Files wsgi.py>
             Order deny,allow
             Require all granted
@@ -23,5 +23,5 @@
 
 </VirtualHost>
 
-WSGIScriptAlias / /home/ubuntu/<%= @project_path %>/<%= @project_name %>/wsgi.py
-WSGIPythonPath /home/ubuntu/<%= @project_path %>
+WSGIScriptAlias / <%= @project_path %>/<%= @project_name %>/wsgi.py
+WSGIPythonPath <%= @project_path %>
