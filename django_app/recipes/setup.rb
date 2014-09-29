@@ -15,9 +15,8 @@ script "install_dependencies" do
     sudo apt-get install -y python-pip
     sudo apt-get install -y python-psycopg2
 
-    #disable default apache site
-    #sudo a2dissite 000-default
-    #sudo service apache2 start
+    # disable default apache site
+    sudo a2dissite 000-default
 
   EOH
 
