@@ -13,7 +13,8 @@ template "/etc/apache2/sites-available/site.conf" do
   group 'root'
   variables({
      :project_path => node[:django_app][:project_path],
-     :project_name => node[:django_app][:project_name]
+     :project_name => node[:django_app][:project_name],
+     :environment => "todo: pass env array and set in apache config"
   })
 end
 
@@ -22,9 +23,6 @@ script "install dependencies and activate" do
   user "ubuntu"
   cwd "/home/ubuntu/"
   code <<-EOH
-
-    #todo: set up environment
-    sudo export DJANGO_SETTINGS_MODULE=#{node['django_app']['project_name']}.settings.base
 
     #todo: install requirements from text file
     sudo pip install django
