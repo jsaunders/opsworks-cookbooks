@@ -1,12 +1,10 @@
 include_recipe 'deploy'
 
 node[:deploy].each do |application, deploy|
-
     opsworks_deploy do
       deploy_data deploy
       app application
     end
-
 end
 
 template "/etc/apache2/sites-available/site.conf" do
@@ -14,7 +12,30 @@ template "/etc/apache2/sites-available/site.conf" do
   owner 'root'
   group 'root'
   variables({
-     :project_path => "fe/fi/fo/fum",
-     :project_name => "foo"
+     :project_path => node[:django_app][:project_path],
+     :project_name => node[:django_app][:project_name]
   })
+end
+
+script "install dependencies and activate" do
+  interpreter "bash"
+  user "ubuntu"
+  cwd "/home/ubuntu/"
+  code <<-EOH
+
+    #todo: set up environment
+    sudo export DJANGO_SETTINGS_MODULE=#{node['django_app']['project_name']}.settings.base
+
+    #todo: install requirements from text file
+    sudo pip install django
+
+    #todo: migrations
+
+    sudo a2dissite 000-default
+    sudo a2ensite site
+    sudo service apache2 reload
+    sudo service apache2 start
+
+    EOH
+
 end
