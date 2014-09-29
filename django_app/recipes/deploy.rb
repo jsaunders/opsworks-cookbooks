@@ -14,7 +14,7 @@ template "/etc/apache2/sites-available/site.conf" do
   owner 'root'
   group 'root'
   variables({
-     :project_path => "fe/fi/fo/fum,
+     :project_path => "fe/fi/fo/fum",
      :project_name => "foo"
   })
 end
