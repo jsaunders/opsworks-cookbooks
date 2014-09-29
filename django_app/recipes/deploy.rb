@@ -1,21 +1,23 @@
 include_recipe 'deploy'
 
 node[:deploy].each do |application, deploy|
+
     opsworks_deploy do
       deploy_data deploy
       app application
     end
-end
 
-template "/etc/apache2/sites-available/site.conf" do
-  source "site.erb"
-  owner 'root'
-  group 'root'
-  variables({
-     :project_path => node[:django_app][:project_path],
-     :project_name => node[:django_app][:project_name],
-     :environment => "todo: pass env array and set in apache config"
-  })
+    template "/etc/apache2/sites-available/site.conf" do
+        source "site.erb"
+        owner 'root'
+        group 'root'
+        variables({
+            :project_path => node[:django_app][:project_path],
+            :project_name => node[:django_app][:project_name],
+            :environment => deploy[:environment]
+        })
+    end
+
 end
 
 script "install dependencies and activate" do
