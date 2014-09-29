@@ -1,0 +1,27 @@
+<VirtualHost *:80>
+
+    ErrorLog /var/log/apache2/error.log
+    CustomLog /var/log/apache2/access.log combined
+
+    Alias /static/ /home/ubuntu/<%= project_path %>/source/static/
+    Alias /robots.txt /home/ubuntu/<%= project_path %>/source/static/robots.txt
+    Alias /favicon.ico /home/ubuntu/<%= project_path %>/source/static/favicon.ico
+
+    <Directory /home/ubuntu/<%= project_path %>/source/static/>
+        Order deny,allow
+        Require all granted
+    </Directory>
+
+    <Directory /home/ubuntu/<%= project_path %>/source/<%= project_name %>>
+        <Files wsgi.py>
+            Order deny,allow
+            Require all granted
+        </Files>
+    </Directory>
+
+    SetEnv DJANGO_SETTINGS_MODULE <%= project_name %>.settings.base
+
+</VirtualHost>
+
+WSGIScriptAlias / /home/ubuntu/<%= project_path %>/source/<%= project_name %>/wsgi.py
+WSGIPythonPath /home/ubuntu/<%= project_name %>/source

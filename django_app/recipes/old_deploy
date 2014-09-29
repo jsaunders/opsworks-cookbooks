@@ -40,13 +40,6 @@ WSGIScriptAlias / /home/ubuntu/$REPO_NAME/source/$PROJECT_NAME/wsgi.py
 WSGIPythonPath /home/ubuntu/$PROJECT_NAME/source
 EOF
 
-    #install private SSH deploy key
-    sudo cat >> /home/ubuntu/.ssh/id_rsa << EOF
-#{node['deploy'][0]['scm']['ssh_key']}
-EOF
-    chmod 600 /home/ubuntu/.ssh/id_rsa
-    git clone git@github.com: #{clone_repo} /home/ubuntu/#{node['django_app']['repo_name']} >> /home/ubuntu/log
-
     #todo: add env keys to environemnt
 
     #instal dependencies
