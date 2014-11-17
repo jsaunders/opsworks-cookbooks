@@ -20,15 +20,15 @@ node[:deploy].each do |application, deploy|
 
 end
 
+requirements_path = node[:django_app][:requirements_path]
+
 script "install dependencies and activate" do
   interpreter "bash"
   user "root"
   code <<-EOH
 
-    #todo: install requirements from text file
-    # needs to know environment
-
-    pip install django
+    # install requirements from text file
+    pip install -r "#{requirements_path}"
 
     #todo: migrations
 
