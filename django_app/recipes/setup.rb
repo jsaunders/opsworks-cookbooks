@@ -9,14 +9,14 @@ script "install_dependencies" do
     ##### export DEBIAN_FRONTEND=noninteractive
     ##### sudo apt-get -y upgrade
 
-    sudo apt-get install -y git
-    sudo apt-get install -y apache2
-    sudo apt-get install -y libapache2-mod-wsgi
-    sudo apt-get install -y python-pip
-    sudo apt-get install -y python-psycopg2
+    apt-get install -y git
+    apt-get install -y apache2
+    apt-get install -y libapache2-mod-wsgi
+    apt-get install -y python-pip
+    apt-get install -y python-psycopg2
 
     # disable default apache site
-    sudo a2dissite 000-default
+    a2dissite 000-default
 
   EOH
 

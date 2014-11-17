@@ -23,8 +23,6 @@
     SetEnv <%= key %> <%= value %>
     <% end %>
 
-    SetEnv DJANGO_SETTINGS_MODULE <%= @project_name %>.settings.base
-
 </VirtualHost>
 
 WSGIScriptAlias / <%= @project_path %>/<%= @project_name %>/wsgi.py
