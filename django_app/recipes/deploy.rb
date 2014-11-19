@@ -22,7 +22,8 @@ end
 
 
 # Export env variables so migrate can access DJANGO_SETTINGS_FILE
-deploy[:environment_variables].each do |key, value|
+environment = deploy[:environment_variables]
+environment.each do |key, value|
     ENV[key] = value
 end
 
