@@ -4,16 +4,15 @@ script "install_dependencies" do
   cwd "/tmp"
   code <<-EOH
 
-    ##### sudo apt-get -y update
-    # suppress GRUB warning for unattended upgrade
-    ##### export DEBIAN_FRONTEND=noninteractive
-    ##### sudo apt-get -y upgrade
-
     apt-get install -y git
     apt-get install -y apache2
     apt-get install -y libapache2-mod-wsgi
-    apt-get install -y python-pip
+    apt-get install -y python-dev
     apt-get install -y python-psycopg2
+
+    # ubuntu pip package is currently broken
+    # https://bugs.launchpad.net/ubuntu/+source/python-pip/+bug/1306991
+    curl --silent --show-error --retry 5 https://bootstrap.pypa.io/get-pip.py | sudo python2.7
 
     # disable default apache site
     a2dissite 000-default
