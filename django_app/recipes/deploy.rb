@@ -20,7 +20,12 @@ node[:deploy].each do |application, deploy|
 
 end
 
-requirements_path = node[:django_app][:requirements_path]
+
+# Export env variables so migrate can access DJANGO_SETTINGS_FILE
+deploy[:environment_variables].each do |key, value|
+    ENV[key] = value
+end
+
 
 script "install dependencies and activate" do
   interpreter "bash"
@@ -28,9 +33,10 @@ script "install dependencies and activate" do
   code <<-EOH
 
     # install requirements from text file
-    pip install -r "#{requirements_path}"
+    pip install -r "#{node[:django_app][:requirements_path]}"
 
-    #todo: migrations
+    # run migrations
+    python #{node[:django_app][:project_path]}/manage.py migrate
 
     a2ensite site
     service apache2 reload
