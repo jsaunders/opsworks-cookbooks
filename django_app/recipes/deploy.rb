@@ -1,5 +1,9 @@
 include_recipe 'deploy'
 
+project_path = node[:django_app][:project_path]
+project_name = node[:django_app][:project_name]
+requirements_path = node[:django_app][:requirements_path]
+
 node[:deploy].each do |application, deploy|
 
     opsworks_deploy do
@@ -12,8 +16,8 @@ node[:deploy].each do |application, deploy|
         owner 'root'
         group 'root'
         variables({
-            :project_path => node[:django_app][:project_path],
-            :project_name => node[:django_app][:project_name],
+            :project_path => project_path,
+            :project_name => project_name,
             :environment => deploy[:environment_variables]
         })
     end
@@ -26,16 +30,17 @@ node[:deploy].each do |application, deploy|
 end
 
 
+
 script "install dependencies and activate" do
   interpreter "bash"
   user "root"
   code <<-EOH
 
     # install requirements from text file
-    pip install -r "#{node[:django_app][:requirements_path]}"
+    pip install -r "#{requirements_path}"
 
     # run migrations
-    python #{node[:django_app][:project_path]}/manage.py migrate
+    python #{project_path}/manage.py migrate
 
     a2ensite site
     service apache2 reload
