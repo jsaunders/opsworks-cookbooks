@@ -14,7 +14,7 @@ node[:deploy].each do |application, deploy|
         variables({
             :project_path => node[:django_app][:project_path],
             :project_name => node[:django_app][:project_name],
-            :environment => deploy[:environment_variables]
+            :environment => node[:deploy][:environment_variables]
         })
     end
 
@@ -22,8 +22,7 @@ end
 
 
 # Export env variables so migrate can access DJANGO_SETTINGS_FILE
-environment = deploy[:environment_variables]
-environment.each do |key, value|
+node[:deploy][:environment_variables].each do |key, value|
     ENV[key] = value
 end
 
