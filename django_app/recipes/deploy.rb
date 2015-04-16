@@ -3,6 +3,8 @@ include_recipe 'deploy'
 project_path = node[:django_app][:project_path]
 project_name = node[:django_app][:project_name]
 requirements_path = node[:django_app][:requirements_path]
+htpasswd = node[:django_app][:htpasswd]
+
 
 node[:deploy].each do |application, deploy|
 
@@ -38,9 +40,22 @@ node[:deploy].each do |application, deploy|
         variables({
             :project_path => project_path,
             :project_name => project_name,
-            :environment => deploy[:environment_variables]
+            :environment => deploy[:environment_variables],
+            :htpasswd  => htpasswd
         })
     end
+
+    template '/etc/apache2/.htpasswd' do
+        source 'htpasswd.erb'
+        owner 'root'
+        group 'root'
+        mode '644'
+        variables({
+            :htpasswd  => htpasswd
+        })
+    end
+
+
 
     # Export env variables so migrate can access DJANGO_SETTINGS_FILE
     deploy[:environment_variables].each do |key, value|

@@ -19,6 +19,15 @@
         </Files>
     </Directory>
 
+    <% if @htpasswd -%>
+    <Location />
+        AuthType Basic
+        AuthName "Authentication Required"
+        AuthUserFile "/etc/apache2/.htpasswd"
+        Require valid-user
+    </Location>
+    <% end -%>
+
     <% @environment.each do |key, value| -%>
     SetEnv <%= key %> <%= value %>
     <% end %>
