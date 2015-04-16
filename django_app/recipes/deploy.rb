@@ -1,10 +1,10 @@
 include_recipe 'deploy'
 
+
 project_path = node[:django_app][:project_path]
 project_name = node[:django_app][:project_name]
 requirements_path = node[:django_app][:requirements_path]
 htpasswd = node[:django_app][:htpasswd]
-
 
 node[:deploy].each do |application, deploy|
 

@@ -7,6 +7,12 @@
     Alias /robots.txt <%= @project_path %>/static/robots.txt
     Alias /favicon.ico <%= @project_path %>/static/favicon.ico
 
+    <% if @force_https -%>
+    RewriteEngine On
+    RewriteCond %{HTTP:X-Forwarded-Proto} !https
+    RewriteRule ^.*$ https://%{SERVER_NAME}%{REQUEST_URI} [L,R=permanent]
+    <% end -%>
+
     <Directory <%= @project_path %>/static/>
         Order deny,allow
         Require all granted
