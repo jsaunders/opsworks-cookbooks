@@ -9,7 +9,7 @@
 
     <% if @force_https -%>
     RewriteEngine On
-    RewriteCond %{HTTP:X-Forwarded-Proto} https
+    RewriteCond %{HTTP:X-Forwarded-Proto} http
     RewriteRule ^.*$ https://%{SERVER_NAME}%{REQUEST_URI} [L,R=301]
     <% end -%>
 
