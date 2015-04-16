@@ -5,6 +5,7 @@ project_path = node[:django_app][:project_path]
 project_name = node[:django_app][:project_name]
 requirements_path = node[:django_app][:requirements_path]
 htpasswd = node[:django_app][:htpasswd]
+force_https = node[:django_app][:force_https]
 
 node[:deploy].each do |application, deploy|
 
@@ -22,7 +23,8 @@ node[:deploy].each do |application, deploy|
             :project_path => project_path,
             :project_name => project_name,
             :environment => deploy[:environment_variables],
-            :htpasswd  => htpasswd
+            :htpasswd  => htpasswd,
+            :force_https => force_https
         })
     end
 
