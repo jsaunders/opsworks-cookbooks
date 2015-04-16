@@ -21,7 +21,8 @@ node[:deploy].each do |application, deploy|
         variables({
             :project_path => project_path,
             :project_name => project_name,
-            :environment => deploy[:environment_variables]
+            :environment => deploy[:environment_variables],
+            :htpasswd  => htpasswd
         })
     end
 
@@ -40,8 +41,7 @@ node[:deploy].each do |application, deploy|
         variables({
             :project_path => project_path,
             :project_name => project_name,
-            :environment => deploy[:environment_variables],
-            :htpasswd  => htpasswd
+            :environment => deploy[:environment_variables]
         })
     end
 
@@ -54,8 +54,6 @@ node[:deploy].each do |application, deploy|
             :htpasswd  => htpasswd
         })
     end
-
-
 
     # Export env variables so migrate can access DJANGO_SETTINGS_FILE
     deploy[:environment_variables].each do |key, value|
