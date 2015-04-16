@@ -15,6 +15,7 @@ node[:deploy].each do |application, deploy|
         source "site.erb"
         owner 'root'
         group 'root'
+        mode '600'
         variables({
             :project_path => project_path,
             :project_name => project_name,
@@ -33,6 +34,7 @@ node[:deploy].each do |application, deploy|
         source 'celeryd_conf.erb'
         owner 'root'
         group 'root'
+        mode '600'
         variables({
             :project_path => project_path,
             :project_name => project_name,
