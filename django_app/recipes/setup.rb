@@ -8,7 +8,6 @@ script "install_dependencies" do
     apt-get install -y apache2
     apt-get install -y libapache2-mod-wsgi
 
-
     # postgresql dependencies
     #apt-get install -y python-dev
     #apt-get install -y libpq-dev

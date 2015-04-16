@@ -11,8 +11,26 @@ node[:deploy].each do |application, deploy|
       deploy_data deploy
     end
 
-    template "/etc/apache2/sites-available/site.conf" do
+    template '/etc/apache2/sites-available/site.conf' do
         source "site.erb"
+        owner 'root'
+        group 'root'
+        variables({
+            :project_path => project_path,
+            :project_name => project_name,
+            :environment => deploy[:environment_variables]
+        })
+    end
+
+    template '/etc/init.d/celeryd' do
+        source 'celeryd_init.erb'
+        owner 'root'
+        group 'root'
+        mode '755'
+    end
+
+    template '/etc/default/celeryd' do
+        source 'celeryd_conf.erb'
         owner 'root'
         group 'root'
         variables({
@@ -30,7 +48,6 @@ node[:deploy].each do |application, deploy|
 end
 
 
-
 script "install dependencies and activate" do
   interpreter "bash"
   user "root"
@@ -45,6 +62,9 @@ script "install dependencies and activate" do
     a2ensite site
     service apache2 reload
     service apache2 start
+
+    # start or restart celery
+    sudo service celeryd restart
 
     EOH
 
