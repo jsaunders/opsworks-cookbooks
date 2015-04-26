@@ -9,8 +9,8 @@
 
     <% if @force_https -%>
     RewriteEngine On
-    RewriteCond %{HTTP:X-Forwarded-Proto} !https
-    RewriteRule ^.*$ https://<%= @https_domain %>%{REQUEST_URI}
+    RewriteCond %{HTTP:X-Forwarded-Proto} !=https
+    RewriteRule ^/(.*)$ https://<%= @https_domain %>/$1 [R=301,L]
     <% end -%>
 
     <Directory <%= @project_path %>/static/>
