@@ -7,11 +7,11 @@
     Alias /robots.txt <%= @project_path %>/static/robots.txt
     Alias /favicon.ico <%= @project_path %>/static/favicon.ico
 
-#<% if @force_https -%>
-#RewriteEngine On
-#RewriteCond %{HTTP:X-Forwarded-Proto} !https
-#RewriteRule !/health ^.*$ https://%{SERVER_NAME}%{REQUEST_URI} [L,R=301]
-#<% end -%>
+    <% if @force_https -%>
+    RewriteEngine On
+    RewriteCond %{HTTP:X-Forwarded-Proto} !https
+    RewriteRule ^.*$ https://<%= @https_domain %>%{REQUEST_URI}
+    <% end -%>
 
     <Directory <%= @project_path %>/static/>
         Order deny,allow
