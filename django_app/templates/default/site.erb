@@ -25,7 +25,6 @@
 
     <% if @force_https -%>
         RewriteEngine On
-        RewriteCond %{HTTPS} !=on
         RewriteCond %{HTTP:X-Forwarded-Proto} !https [NC]
         RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
     <% end -%>

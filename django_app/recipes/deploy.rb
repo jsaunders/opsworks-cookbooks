@@ -77,6 +77,7 @@ script "install dependencies and activate" do
     python #{project_path}/manage.py migrate
 
     a2ensite site
+    a2enmod rewrite
     service apache2 reload
     service apache2 start
 
