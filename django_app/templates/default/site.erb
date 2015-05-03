@@ -4,10 +4,6 @@
     CustomLog /var/log/apache2/access.log combined
 
     Alias /static/ <%= @project_path %>/static/
-    Alias /robots.txt <%= @project_path %>/static/robots.txt
-    Alias /favicon.ico <%= @project_path %>/static/favicon.ico
-
-
 
     <Directory <%= @project_path %>/static/>
         Order deny,allow
