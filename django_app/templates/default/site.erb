@@ -38,7 +38,11 @@
     SetEnv <%= key %> <%= value %>
     <% end %>
 
+    WSGIDaemonProcess <%= @project_name %> processes=2 threads=15 display-name=%{GROUP}
+    WSGIProcessGroup <%= @project_name %>
+    WSGIScriptAlias / <%= @project_path %>/<%= @project_name %>/wsgi.py
+
 </VirtualHost>
 
-WSGIScriptAlias / <%= @project_path %>/<%= @project_name %>/wsgi.py
-WSGIPythonPath <%= @project_path %>
+#WSGIScriptAlias / <%= @project_path %>/<%= @project_name %>/wsgi.py
+#WSGIPythonPath <%= @project_path %>
