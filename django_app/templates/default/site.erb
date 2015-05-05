@@ -34,6 +34,13 @@
 
     </Location>
 
+    <Location /server-status>
+        SetHandler server-status
+        Order deny, allow
+        Deny from all
+        Allow from localhost
+    </Location>
+
     <% @environment.each do |key, value| -%>
     SetEnv <%= key %> <%= value %>
     <% end %>
