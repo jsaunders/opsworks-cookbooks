@@ -10,13 +10,6 @@
         Require all granted
     </Directory>
 
-    <Location /server-status>
-        SetHandler server-status
-        Order deny,allow
-        Deny from all
-        Allow from localhost ip6-localhost
-    </Location>
-
     <Directory <%= @project_path %>/<%= @project_name %>>
         <Files wsgi.py>
             Order deny,allow
