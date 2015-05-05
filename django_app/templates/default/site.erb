@@ -10,6 +10,13 @@
         Require all granted
     </Directory>
 
+    <Location /server-status>
+        SetHandler server-status
+        Order deny,allow
+        Deny from all
+        Allow from localhost ip6-localhost
+    </Location>
+
     <Directory <%= @project_path %>/<%= @project_name %>>
         <Files wsgi.py>
             Order deny,allow
@@ -32,13 +39,6 @@
         Require valid-user
     <% end -%>
 
-    </Location>
-
-    <Location /server-status>
-        SetHandler server-status
-        Order deny, allow
-        Deny from all
-        Allow from localhost
     </Location>
 
     <% @environment.each do |key, value| -%>
