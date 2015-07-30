@@ -4,6 +4,7 @@
     CustomLog /var/log/apache2/access.log combined
 
     Alias /static/ <%= @project_path %>/static/
+    Alias /media/ <%= @project_path %>/media/
 
     <Directory <%= @project_path %>/static/>
         Order deny,allow
