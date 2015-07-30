@@ -10,6 +10,11 @@
         Require all granted
     </Directory>
 
+    <Directory <%= @project_path %>/media/>
+        Order deny,allow
+        Require all granted
+    </Directory>
+
     <Directory <%= @project_path %>/<%= @project_name %>>
         <Files wsgi.py>
             Order deny,allow
