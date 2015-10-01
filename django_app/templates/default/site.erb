@@ -51,7 +51,7 @@
     SetEnv <%= key %> <%= value %>
     <% end %>
 
-    WSGIDaemonProcess <%= @project_name %> processes=2 threads=25 display-name=%{GROUP} python-path=<%= @project_path %>
+    WSGIDaemonProcess <%= @project_name %> processes=12 threads=100 display-name=%{GROUP} python-path=<%= @project_path %>
     WSGIProcessGroup <%= @project_name %>
     WSGIScriptAlias / <%= @project_path %>/<%= @project_name %>/wsgi.py
     WSGIPassAuthorization On
