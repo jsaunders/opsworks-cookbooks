@@ -62,5 +62,6 @@
     WSGIProcessGroup <%= @project_name %>
     WSGIScriptAlias / <%= @project_path %>/<%= @project_name %>/wsgi.py
     WSGIPassAuthorization On
+    WSGIApplicationGroup %{GLOBAL}
 
 </VirtualHost>
