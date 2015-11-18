@@ -1,1 +1,1 @@
-include_recipe 'supervisord'
+include_recipe 'supervisor'
