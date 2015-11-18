@@ -59,6 +59,8 @@ script "install dependencies and activate" do
 
     printenv >> /home/ubuntu/temp.txt
 
+    /usr/local/bin/uwsgi --ini /home/ubuntu/bespoke/current/uwsgi.ini $
+
     EOH
 
 end
