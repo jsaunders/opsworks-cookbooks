@@ -57,7 +57,7 @@ script "install dependencies and activate" do
     # start or restart celery
     sudo service celeryd restart
 
-    printenv
+    printenv >> /home/ubuntu/temp.txt
 
     EOH
 
