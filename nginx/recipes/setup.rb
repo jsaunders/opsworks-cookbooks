@@ -10,7 +10,7 @@ service "nginx" do
 end
 
 
-cookbook_file "/etc/nginx/nginx.conf" do
+cookbook_file "/etc/nginx/site-available/nginx" do
   source "nginx-app.conf"
   mode 0640
   owner "root"
