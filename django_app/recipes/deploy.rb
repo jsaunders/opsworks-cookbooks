@@ -14,19 +14,6 @@ node[:deploy].each do |application, deploy|
       deploy_data deploy
     end
 
-    template '/etc/apache2/sites-available/site.conf' do
-        source "site.erb"
-        owner 'root'
-        group 'root'
-        mode '600'
-        variables({
-            :project_path => project_path,
-            :project_name => project_name,
-            :environment => deploy[:environment_variables],
-            :htpasswd  => htpasswd,
-            :force_https => force_https
-        })
-    end
 
     template '/etc/init.d/celeryd' do
         source 'celeryd_init.erb'
@@ -47,15 +34,6 @@ node[:deploy].each do |application, deploy|
         })
     end
 
-    template '/etc/apache2/.htpasswd' do
-        source 'htpasswd.erb'
-        owner 'root'
-        group 'root'
-        mode '644'
-        variables({
-            :htpasswd  => htpasswd
-        })
-    end
 
     # Export env variables so migrate can access DJANGO_SETTINGS_FILE
     deploy[:environment_variables].each do |key, value|
@@ -75,11 +53,6 @@ script "install dependencies and activate" do
 
     # run migrations
     python #{project_path}/manage.py migrate
-
-    a2ensite site
-    a2enmod rewrite
-    service apache2 reload
-    service apache2 start
 
     # start or restart celery
     sudo service celeryd restart
