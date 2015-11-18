@@ -1,0 +1,1 @@
+cookbook 'gunicorn', git: 'git@github.com:chef-cookbooks/gunicorn.git'
