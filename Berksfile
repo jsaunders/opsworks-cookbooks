@@ -1,1 +1,1 @@
-cookbook 'gunicorn', git: 'git@github.com:chef-cookbooks/gunicorn.git'
+cookbook 'gunicorn', '~> 1.2.1'
