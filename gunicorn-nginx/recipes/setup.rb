@@ -10,6 +10,8 @@ script "install_dependencies" do
     apt-get install -y supervisor
     apt-get install -y git
 
+    sudo pip install uwsgi >> /home/ubuntu/uwsgi.txt
+
     # add nginx stable ppa
     add-apt-repository -y ppa:nginx/stable
     # update packages after adding nginx repository
@@ -22,7 +24,6 @@ script "install_dependencies" do
     easy_install pip
 
     # install uwsgi now because it takes a little while
-    sudo pip install uwsgi
 
     un useradd celeryuser
     apt-get install -y python-psycopg2
