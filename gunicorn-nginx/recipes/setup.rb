@@ -22,7 +22,7 @@ script "install_dependencies" do
     easy_install pip
 
     # install uwsgi now because it takes a little while
-    pip install uwsgi
+    sudo pip install uwsgi
 
     un useradd celeryuser
     apt-get install -y python-psycopg2
