@@ -26,7 +26,6 @@ script "install_dependencies" do
     # install uwsgi now because it takes a little while
 
     useradd celeryuser
-    apt-get install -y python-psycopg2
 
     # ubuntu pip package is currently broken
     # https://bugs.launchpad.net/ubuntu/+source/python-pip/+bug/1306991
