@@ -10,7 +10,7 @@ script "install_dependencies" do
     apt-get install -y supervisor
     apt-get install -y git
 
-    sudo pip install uwsgi >> /home/ubuntu/uwsgi.txt
+    pip install uwsgi
 
     # add nginx stable ppa
     add-apt-repository -y ppa:nginx/stable

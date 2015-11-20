@@ -10,7 +10,7 @@ script "install_dependencies" do
     apt-get install -y python python-dev python-setuptools python-software-properties vim
     apt-get install -y git
 
-    sudo pip install uwsgi
+    pip install uwsgi
 
     apt-get install -y rabbitmq-server
 
